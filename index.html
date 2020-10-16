@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>model viewer</title>
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="stylesheet.css">
+
+        <!-- 3d model viewer links -->
+<!-- Loads <model-viewer> for modern browsers: -->
+    <script type="module"
+    src="https://unpkg.com/@google/model-viewer/dist/model-viewer.js">
+</script>
+
+<!-- Loads <model-viewer> for old browsers like IE11: -->
+<script nomodule
+    src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js">
+</script>
+
+<!-- The following libraries and polyfills are recommended to maximize browser support -->
+<!-- NOTE: you must adjust the paths as appropriate for your project -->
+    
+<!-- 🚨 REQUIRED: Web Components polyfill to support Edge and Firefox < 63 -->
+<script src="https://unpkg.com/@webcomponents/webcomponentsjs@2.1.3/webcomponents-loader.js"></script>
+
+<!-- 💁 OPTIONAL: Intersection Observer polyfill for better performance in Safari and IE11 -->
+<script src="https://unpkg.com/intersection-observer@0.5.1/intersection-observer.js"></script>
+
+<!-- 💁 OPTIONAL: Resize Observer polyfill improves resize behavior in non-Chrome browsers -->
+<script src="https://unpkg.com/resize-observer-polyfill@1.5.1/dist/ResizeObserver.js"></script>
+
+<!-- 💁 OPTIONAL: Fullscreen polyfill is required for experimental AR features in Canary -->
+<!--<script src="https://unpkg.com/fullscreen-polyfill@1.0.2/dist/fullscreen.polyfill.js"></script>-->
+
+<!-- 💁 OPTIONAL: Include prismatic.js for Magic Leap support -->
+<!--<script src="https://unpkg.com/@magicleap/prismatic@0.18.2/prismatic.min.js"></script>-->
+
+
+
+    </head>
+    <body>
+        
+
+<div id="displayblocks">
+
+        <model-viewer ondblclick="onClick()" onclick="selected()" id="modelblock" src="assets/testcube1.gltf" class=""
+        ar
+        auto-rotate 
+        camera-controls
+        background-color="#254441"
+        shadow-intensity="1"
+      alt="A 3D model of a test cube">
+      <button slot="hotspot-0" class="hotspot" data-position="-0.7397343349036523m 0.7593637108802795m 0.3262876049225051m" data-normal="0m 1m 0m"><div class="annotation">
+        test2</div></button>
+      <button slot="hotspot-1" class="hotspot" data-position="0.13529183354718943m 1.2509730929556313m 0.05367829508087851m" data-normal="0.027936893635175666m -0.11609595558159552m 0.9928450327576873m"><div class="annotation">
+        test</div></button>
+      
+
+        
+
+        
+</model-viewer>
+<div id="formblock">
+    <form onSubmit="return false;">
+        <label for="hotspottext">comment text</label>
+  <input type="text" id="hotspottext" name="hotspottext">
+
+  <button onclick="removeHotspot()">Remove last hotspot</button>
+    </form>
+</div>
+</div>
+
+
+<script>
+    function selected(){
+            // Add active class to the current button (highlight it)
+var header = document.getElementById("modelblock");
+var hotspots = header.getElementsByClassName("hotspot");
+for (var i = 0; i < hotspots.length; i++) {
+  hotspots[i].addEventListener("click", function() {
+  var current = document.getElementsByClassName("selected");
+  if (current.length > 0) { 
+    current[0].className = current[0].className.replace(" selected", "");
+  }
+  this.className += " selected";
+  });
+}
+
+    }
+
+
+    </script>
+        
+<script>
+    var hotspotCounter = 3;
+    function onClick(MouseEvent) {
+
+        
+        var inputtext = document.querySelector('input').value;
+        if (inputtext == ""){
+    alert("Put in text first to add hotspots.");
+}else{
+       
+      const viewer = document.querySelector('#modelblock');
+    const rect = viewer.getBoundingClientRect();
+
+const x = event.clientX - rect.left;
+const y = event.clientY - rect.top;
+const positionAndNormal = viewer.positionAndNormalFromPoint(x, y);
+
+
+
+
+
+            
+
+if (positionAndNormal == null) {
+console.log('no hit result: mouse = ', x, ', ', y);
+return;
+}
+const {position, normal} = positionAndNormal;
+
+const hotspot = document.createElement('button');
+hotspot.slot = `hotspot-${hotspotCounter ++}`;
+
+hotspot.classList.add('hotspot');
+hotspot.classList.add('selected');
+hotspot.id = `hotspot-${hotspotCounter}`;
+hotspot.dataset.position = position.toString();
+if (normal != null) {
+hotspot.dataset.normal = normal.toString();
+
+}
+viewer.appendChild(hotspot);
+// const shownormal = normal.toString();
+console.log('mouse = ', x, ', ', y, positionAndNormal);
+
+
+
+var element = document.createElement("div");
+element.classList.add('annotation');
+element.appendChild(document.createTextNode(inputtext));
+document.getElementById(`hotspot-${hotspotCounter}`).appendChild(element);
+
+document.querySelector('input').value = "";
+}
+}
+
+</script>
+<script>
+    function removeHotspot(){
+    var el = document.getElementById(`hotspot-${hotspotCounter}`);
+    
+    if (el == null){
+        alert("No hotspots to delete");
+    }else{
+        hotspotCounter --;
+el.remove()}; // Removes the div with the 'div-02' id
+}
+</script>
+
+    </body>
+</html>
