@@ -53,9 +53,9 @@
         background-color="#254441"
         shadow-intensity="1"
       alt="A 3D model of a test cube">
-      <button slot="hotspot-0" class="hotspot" data-position="-0.7397343349036523m 0.7593637108802795m 0.3262876049225051m" data-normal="0m 1m 0m"><div class="annotation">
+      <button slot="hotspot-0" class="hotspot selected" data-position="-0.7397343349036523m 0.7593637108802795m 0.3262876049225051m" data-normal="0m 1m 0m"><div class="annotation">
         test2</div></button>
-      <button slot="hotspot-1" class="hotspot" data-position="0.13529183354718943m 1.2509730929556313m 0.05367829508087851m" data-normal="0.027936893635175666m -0.11609595558159552m 0.9928450327576873m"><div class="annotation">
+      <button slot="hotspot-1" class="hotspot selected" data-position="0.13529183354718943m 1.2509730929556313m 0.05367829508087851m" data-normal="0.027936893635175666m -0.11609595558159552m 0.9928450327576873m"><div class="annotation">
         test</div></button>
       
 
@@ -64,45 +64,25 @@
         
 </model-viewer>
 <div id="formblock">
-    <form onSubmit="return false;">
-        <label for="hotspottext">comment text</label>
-  <input type="text" id="hotspottext" name="hotspottext">
+    
+        
 
   <button onclick="removeHotspot()">Remove last hotspot</button>
-    </form>
+  
 </div>
 </div>
 
 
-<script>
-    function selected(){
-            // Add active class to the current button (highlight it)
-var header = document.getElementById("modelblock");
-var hotspots = header.getElementsByClassName("hotspot");
-for (var i = 0; i < hotspots.length; i++) {
-  hotspots[i].addEventListener("click", function() {
-  var current = document.getElementsByClassName("selected");
-  if (current.length > 0) { 
-    current[0].className = current[0].className.replace(" selected", "");
-  }
-  this.className += " selected";
-  });
-}
 
-    }
-
-
-    </script>
         
 <script>
     var hotspotCounter = 3;
     function addHotspot(MouseEvent) {
 
         
-        var inputtext = document.querySelector('input').value;
-        if (inputtext == ""){
-    alert("Put in text first to add hotspots.");
-}else{
+       
+        
+
        
       const viewer = document.querySelector('#modelblock');
     const rect = viewer.getBoundingClientRect();
@@ -134,14 +114,9 @@ console.log('mouse = ', x, ', ', y, positionAndNormal);
 
 
 
-var element = document.createElement("div");
-element.classList.add('annotation');
-element.appendChild(document.createTextNode(inputtext));
-document.getElementById(`hotspot-${hotspotCounter}`).appendChild(element);
 
-document.querySelector('input').value = "";
 }
-}
+
 
 </script>
 <script>
@@ -149,10 +124,10 @@ document.querySelector('input').value = "";
     var el = document.getElementById(`hotspot-${hotspotCounter}`);
     
     if (el == null){
-        alert("No hotspots to delete");
+        alert("No dynamicly added hotspots to delete");
     }else{
         hotspotCounter --;
-el.remove()}; // Removes the div with the 'div-02' id
+el.remove()}; // Removes the hotspot
 }
 </script>
 
