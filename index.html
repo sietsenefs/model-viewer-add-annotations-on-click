@@ -65,11 +65,13 @@
 </model-viewer>
 <div id="formblock">
     <form onSubmit="return false;">
-        <label for="hotspottext">comment text</label>
-  <input type="text" id="hotspottext" name="hotspottext">
+        
+  <input type="text" id="hotspottext" name="hotspottext" placeholder="Input text for hotspot">
+ </form>
 
-  <button onclick="removeHotspot()">Remove last hotspot</button>
-    </form>
+ 
+  <div class="center"><button class="btn" onclick="removeHotspot()">Remove last hotspot</button></div>
+   
 </div>
 </div>
 
@@ -95,11 +97,12 @@ for (var i = 0; i < hotspots.length; i++) {
     </script>
         
 <script>
-    var hotspotCounter = 3;
+    //hotspot counter so we can keep track of how many we added on 3 because we already have hotspot-0 and hotspot-1 (set to 0 if you start with 0 hotspots)
+    var hotspotCounter = 2;
     function addHotspot(MouseEvent) {
-
-        
         var inputtext = document.querySelector('input').value;
+
+        // if input = nothing then alert error if it isnt then add the hotspot
         if (inputtext == ""){
     alert("Put in text first to add hotspots.");
 }else{
@@ -111,29 +114,27 @@ const x = event.clientX - rect.left;
 const y = event.clientY - rect.top;
 const positionAndNormal = viewer.positionAndNormalFromPoint(x, y);
 
-
+// if the model is not clicked return the position in the console
 if (positionAndNormal == null) {
 console.log('no hit result: mouse = ', x, ', ', y);
 return;
 }
 const {position, normal} = positionAndNormal;
 
+// create the hotspot
 const hotspot = document.createElement('button');
 hotspot.slot = `hotspot-${hotspotCounter ++}`;
-
 hotspot.classList.add('hotspot');
-// hotspot.classList.add('selected');
 hotspot.id = `hotspot-${hotspotCounter}`;
 hotspot.dataset.position = position.toString();
 if (normal != null) {
 hotspot.dataset.normal = normal.toString();
-
 }
 viewer.appendChild(hotspot);
 console.log('mouse = ', x, ', ', y, positionAndNormal);
 
 
-
+// adds the text to last hotspot
 var element = document.createElement("div");
 element.classList.add('annotation');
 element.appendChild(document.createTextNode(inputtext));
@@ -152,7 +153,7 @@ document.querySelector('input').value = "";
         alert("No hotspots to delete");
     }else{
         hotspotCounter --;
-el.remove()}; // Removes the div with the 'div-02' id
+el.remove()}; // Removes the last added hotspot
 }
 </script>
 

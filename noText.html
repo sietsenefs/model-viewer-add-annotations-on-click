@@ -67,7 +67,7 @@
     
         
 
-  <button onclick="removeHotspot()">Remove last hotspot</button>
+    <div class="center"><button class="btn" onclick="removeHotspot()">Remove last hotspot</button></div>
   
 </div>
 </div>
@@ -76,14 +76,10 @@
 
         
 <script>
-    var hotspotCounter = 3;
+    //hotspot counter so we can keep track of how many we added on 3 because we already have hotspot-0 and hotspot-1 (set to 0 if you start with 0 hotspots)
+    var hotspotCounter = 2;
     function addHotspot(MouseEvent) {
 
-        
-       
-        
-
-       
       const viewer = document.querySelector('#modelblock');
     const rect = viewer.getBoundingClientRect();
 
@@ -91,17 +87,19 @@ const x = event.clientX - rect.left;
 const y = event.clientY - rect.top;
 const positionAndNormal = viewer.positionAndNormalFromPoint(x, y);
 
-
+// if the model is not clicked return the position in the console
 if (positionAndNormal == null) {
 console.log('no hit result: mouse = ', x, ', ', y);
 return;
 }
 const {position, normal} = positionAndNormal;
 
+// create the hotspot
 const hotspot = document.createElement('button');
 hotspot.slot = `hotspot-${hotspotCounter ++}`;
-
 hotspot.classList.add('hotspot');
+
+// this can be added if you want the hotspot to be in selected state
 // hotspot.classList.add('selected');
 hotspot.id = `hotspot-${hotspotCounter}`;
 hotspot.dataset.position = position.toString();

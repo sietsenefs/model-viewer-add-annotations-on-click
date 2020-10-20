@@ -1,26 +1,5 @@
 
-#displayblocks{
-    display: flex;
-    justify-content: space-around;
-}
-
-#modelblock{
-    width: 40vw;
-    height: 80vh;
-    margin: 10vh 0px;
-  
-}
-
-#formblock{
-    width: 40vw;
-    margin: 10vh 0px;
-   
-    height: 80vh;
-    background-color: whitesmoke;
-}
-
-
-
+/* hotspot styling */
   .hotspot{
     width: 20px;
     height: 20px;
@@ -47,6 +26,56 @@
     display: none;
   }
 
-  button[slot="hotspot-0"]{
-    --min-hotspot-opacity: 0;
-  }
+
+
+  /* not important document styling */
+#displayblocks{
+  display: flex;
+  justify-content: center;
+}
+
+#modelblock{
+  width: 80vw;
+  height: 80vh;
+  margin: 10vh 0px 0px 0px;
+
+}
+
+#formblock{
+  width: 40vw;
+  margin: 10vh 0px 0px 0px;
+ 
+  height: 80vh;
+  background-color: white;
+}
+.center{
+  display: flex;
+  justify-content: center;
+
+}
+
+.btn{
+  background-color: #008CBA; 
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 50px 2px 4px 2px;
+  cursor: pointer;
+}
+
+
+input[type=text], select {
+  width: 80%;
+  padding: 12px 20px;
+  margin: 50px 10% 0px 10%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+  
